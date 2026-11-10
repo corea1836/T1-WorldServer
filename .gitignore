@@ -1,0 +1,8 @@
+# 빌드 산출물 (cmake -B build, CLion의 cmake-build-*)
+build/
+cmake-build-*/
+
+# 에디터 · OS
+.idea/
+.cache/
+.DS_Store
