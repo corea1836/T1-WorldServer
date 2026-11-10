@@ -1,16 +1,16 @@
 #include <iostream>
 #include <thread>
+#include <atomic>
 
 int main()
 {
-    bool bIsEnd = false;
-    bool* bp = &bIsEnd;
-    std::thread t([bp]
+    std::atomic<bool> bIsEnd = false;
+    std::thread t([&bIsEnd]
     {
         int count = 0;
         while (true)
         {
-            if (*bp == true)
+            if (bIsEnd == true)
             {
                 break;
             }
@@ -23,7 +23,7 @@ int main()
     });
 
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-    bIsEnd = true;
+    bIsEnd.store(true);
 
     t.join();
 
