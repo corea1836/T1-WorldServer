@@ -1,7 +1,5 @@
 #include "WorldLoop.h"
 
-#include <iostream>
-
 WorldLoop::~WorldLoop()
 {
     Stop();
@@ -44,7 +42,7 @@ void WorldLoop::Run()
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
         if (count++ % 20 == 0)
         {
-            std::cout << "1\n";
+            std::printf("1\n");
         }
     }
 }

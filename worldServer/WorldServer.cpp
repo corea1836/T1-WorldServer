@@ -1,6 +1,8 @@
 #include <thread>
 #include <atomic>
 #include <csignal>
+
+#include "NetworkService.h"
 #include "WorldLoop.h"
 
 static std::atomic<bool> stopRequested = false;
@@ -16,8 +18,10 @@ int main()
     std::signal(SIGTERM, OnSignal);
 
     WorldLoop worldLoop;
-
     worldLoop.Start();
+
+    NetworkService networkService(7777);
+    networkService.Start();
 
     while (stopRequested.load() == false)
     {
@@ -26,5 +30,7 @@ int main()
 
     worldLoop.Stop();
     worldLoop.Join();
+    networkService.Stop();
+    networkService.Join();
     return 0;
 }
