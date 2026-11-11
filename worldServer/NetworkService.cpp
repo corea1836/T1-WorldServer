@@ -1,6 +1,7 @@
 #include "NetworkService.h"
 
 #include <boost/asio/post.hpp>
+#include "WorldSocket.h"
 
 NetworkService::NetworkService(uint16_t port)
     : _ioContext()
@@ -28,6 +29,10 @@ void NetworkService::Stop()
     boost::asio::post(_ioContext, [this]()
     {
        _acceptor.close();
+       for (const auto& socket: _sockets)
+       {
+           socket->CloseSocket();
+       }
     });
 }
 
@@ -52,7 +57,9 @@ void NetworkService::AsyncAccept()
        if (!error)
        {
            std::printf("Start Accept Client!\n");
-
+           std::shared_ptr<WorldSocket> clientSocket = std::make_shared<WorldSocket>(std::move(socket));
+           _sockets.push_back(clientSocket);
+           clientSocket->Start();
            AsyncAccept();
        }
     });

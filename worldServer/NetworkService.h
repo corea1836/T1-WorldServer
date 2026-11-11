@@ -1,8 +1,12 @@
 #pragma once
 #include <thread>
+#include <vector>
+#include <memory>
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 
+
+class WorldSocket;
 
 class NetworkService
 {
@@ -22,5 +26,6 @@ private:
     std::thread _thread;
     uint16_t _port;
     boost::asio::ip::tcp::acceptor _acceptor;
+    std::vector<std::shared_ptr<WorldSocket>> _sockets;
 };
 

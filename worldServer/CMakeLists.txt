@@ -4,6 +4,8 @@ add_executable(WorldServer
         WorldLoop.cpp
         NetworkService.cpp
         NetworkService.h
+        WorldSocket.cpp
+        WorldSocket.h
 )
 
 target_link_libraries(WorldServer PRIVATE Boost::headers)
