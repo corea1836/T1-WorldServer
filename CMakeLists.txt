@@ -9,4 +9,6 @@ if (T1_TSAN)
     add_link_options(-fsanitize=thread)
 endif ()
 
+find_package(Boost REQUIRED)
+
 add_subdirectory(worldServer)

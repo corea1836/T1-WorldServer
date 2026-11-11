@@ -4,4 +4,5 @@ add_executable(WorldServer
         WorldLoop.cpp
 )
 
+target_link_libraries(WorldServer PRIVATE Boost::headers)
 target_compile_options(WorldServer PRIVATE -Wall -Wextra)
