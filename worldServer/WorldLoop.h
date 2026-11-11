@@ -5,6 +5,8 @@
 class WorldLoop
 {
 public:
+    ~WorldLoop();
+
     void Start();
     void Stop();
     void Join();

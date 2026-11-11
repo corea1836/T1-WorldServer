@@ -2,6 +2,12 @@
 
 #include <iostream>
 
+WorldLoop::~WorldLoop()
+{
+    Stop();
+    Join();
+}
+
 void WorldLoop::Start()
 {
     _bRunning.store(true);
@@ -19,7 +25,10 @@ void WorldLoop::Stop()
 
 void WorldLoop::Join()
 {
-    _thread.join();
+    if (_thread.joinable())
+    {
+        _thread.join();
+    }
 }
 
 void WorldLoop::Run()
