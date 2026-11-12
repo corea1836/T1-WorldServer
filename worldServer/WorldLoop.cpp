@@ -1,5 +1,7 @@
 #include "WorldLoop.h"
 
+#include <cstdio>
+
 WorldLoop::~WorldLoop()
 {
     Stop();

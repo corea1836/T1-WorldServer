@@ -11,6 +11,8 @@ public:
     void Start();
     void CloseSocket();
 
+    bool IsOpen() const { return _socket.is_open(); }
+
 private:
     void AsyncRead();
     boost::asio::ip::tcp::socket _socket;

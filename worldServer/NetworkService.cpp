@@ -1,12 +1,14 @@
 #include "NetworkService.h"
 
 #include <boost/asio/post.hpp>
+#include <cstdio>
 #include "WorldSocket.h"
 
 NetworkService::NetworkService(uint16_t port)
     : _ioContext()
     , _port(port)
     , _acceptor(_ioContext, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), _port))
+    , _updateTimer(_ioContext)
 {
 }
 
@@ -33,6 +35,7 @@ void NetworkService::Stop()
        {
            socket->CloseSocket();
        }
+        _updateTimer.cancel();
     });
 }
 
@@ -44,9 +47,34 @@ void NetworkService::Join()
     }
 }
 
+void NetworkService::Update()
+{
+    size_t eraseCount = std::erase_if(_sockets, [](const std::shared_ptr<WorldSocket>& socket)
+    {
+       return !socket->IsOpen();
+    });
+
+    if (eraseCount > 0)
+    {
+        std::printf("Erase Sockets: %zu\n", eraseCount);
+    }
+
+    _updateTimer.expires_after(std::chrono::seconds(1));
+    _updateTimer.async_wait([this](const boost::system::error_code& error)
+    {
+        if (error)
+        {
+            std::printf("Update timer stopped: %s\n", error.message().c_str());
+            return;
+        }
+       Update();
+    });
+}
+
 void NetworkService::Run()
 {
     AsyncAccept();
+    Update();
     _ioContext.run();
 }
 

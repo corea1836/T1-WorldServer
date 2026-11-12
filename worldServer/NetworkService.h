@@ -4,6 +4,7 @@
 #include <memory>
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/steady_timer.hpp>
 
 
 class WorldSocket;
@@ -18,6 +19,8 @@ public:
     void Stop();
     void Join();
 
+    void Update();
+
 private:
     void Run();
     void AsyncAccept();
@@ -27,5 +30,6 @@ private:
     uint16_t _port;
     boost::asio::ip::tcp::acceptor _acceptor;
     std::vector<std::shared_ptr<WorldSocket>> _sockets;
+    boost::asio::steady_timer _updateTimer;
 };
 
