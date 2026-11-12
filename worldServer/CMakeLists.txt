@@ -6,6 +6,8 @@ add_executable(WorldServer
         NetworkService.h
         WorldSocket.cpp
         WorldSocket.h
+        MessageBuffer.cpp
+        MessageBuffer.h
 )
 
 target_link_libraries(WorldServer PRIVATE Boost::headers)
