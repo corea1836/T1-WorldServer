@@ -101,5 +101,11 @@ void NetworkService::AsyncAccept()
            clientSocket->Start();
            AsyncAccept();
        }
+        else
+        {
+            std::printf("Error Occurred: %s\n", error.message().c_str());
+
+            AsyncAccept();
+        }
     });
 }
