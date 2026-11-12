@@ -1,8 +1,8 @@
 #pragma once
+
 #include <memory>
-#include <array>
-#include <cstdint>
 #include <boost/asio/ip/tcp.hpp>
+#include "MessageBuffer.h"
 
 class WorldSocket: public std::enable_shared_from_this<WorldSocket>
 {
@@ -16,5 +16,5 @@ public:
 private:
     void AsyncRead();
     boost::asio::ip::tcp::socket _socket;
-    std::array<uint8_t, 4096> _readBuffer;
+    MessageBuffer _readBuffer;
 };
