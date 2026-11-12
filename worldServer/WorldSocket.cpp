@@ -62,7 +62,7 @@ void WorldSocket::AsyncRead()
                 break;
             }
 
-            std::printf("Receive Packet. Size: %hu Id: %s\n", header.size, header.id);
+            std::printf("Receive Packet. Size: %hu Id: %hu\n", header.size, header.id);
             self->_readBuffer.ReadCompleted(header.size);
         }
 
