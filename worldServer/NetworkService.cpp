@@ -88,6 +88,11 @@ void NetworkService::AsyncAccept()
 {
     _acceptor.async_accept([this](const boost::system::error_code& error, boost::asio::ip::tcp::socket socket)
     {
+        if (_bStopping)
+        {
+            return;
+        }
+
        if (!error)
        {
            std::printf("Start Accept Client!\n");
