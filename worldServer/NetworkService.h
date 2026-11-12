@@ -31,5 +31,6 @@ private:
     boost::asio::ip::tcp::acceptor _acceptor;
     std::vector<std::shared_ptr<WorldSocket>> _sockets;
     boost::asio::steady_timer _updateTimer;
+    bool _bStopping = false;
 };
 

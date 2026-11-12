@@ -30,6 +30,7 @@ void NetworkService::Stop()
 {
     boost::asio::post(_ioContext, [this]()
     {
+        _bStopping = true;
        _acceptor.close();
        for (const auto& socket: _sockets)
        {
@@ -57,6 +58,11 @@ void NetworkService::Update()
     if (eraseCount > 0)
     {
         std::printf("Erase Sockets: %zu\n", eraseCount);
+    }
+
+    if (_bStopping)
+    {
+        return;
     }
 
     _updateTimer.expires_after(std::chrono::seconds(1));
