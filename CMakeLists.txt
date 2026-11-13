@@ -12,3 +12,4 @@ endif ()
 find_package(Boost REQUIRED)
 
 add_subdirectory(worldServer)
+add_subdirectory(checks)
